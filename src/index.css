@@ -1,6 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Tajawal:wght@300;400;700;900&display=swap');
 @import "tailwindcss";
 
 body {
-  background-color: #0a0a0a; /* لون أسود مطفي فاخر */
-  color: #ededed;
+  background-color: #030508; /* لون تقني داكن جداً */
+  color: #e2e8f0;
+  font-family: 'Tajawal', 'Outfit', sans-serif;
+  overflow-x: hidden;
+}
+
+/* خلفية شبكية خفيفة تعطي طابعاً هندسياً */
+.tech-grid {
+  background-image: 
+    linear-gradient(to right, rgba(34, 211, 238, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(34, 211, 238, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
 }

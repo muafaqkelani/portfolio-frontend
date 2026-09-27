@@ -8,6 +8,7 @@ interface ProfileData {
   bio: string;
   location: string;
   availableForWork: boolean;
+  email?: string;
   cvUrl: string;
   socials: { platform: string; url: string; _key: string }[];
 }
@@ -26,6 +27,27 @@ interface ProjectData {
   link: string;
 }
 
+// دالة ذكية لإرجاع أيقونة أو إيموجي مناسب حسب محتوى النص
+const getSmartIcon = (text: string) => {
+  const lower = text.toLowerCase();
+  if (lower.includes('telegram') || lower.includes('تلغرام')) return '📱';
+  if (lower.includes('github') || lower.includes('جيت هب')) return '🐙';
+  if (lower.includes('linkedin') || lower.includes('لينكد إن')) return '💼';
+  if (lower.includes('whatsapp') || lower.includes('واتساب')) return '💬';
+  if (lower.includes('twitter') || lower.includes('x')) return '🐦';
+  if (lower.includes('email') || lower.includes('mail')) return '✉️';
+  
+  // تقنيات برمجية
+  if (lower.includes('react') || lower.includes('vue')) return '⚛️';
+  if (lower.includes('java')) return '☕';
+  if (lower.includes('php') || lower.includes('laravel')) return '🐘';
+  if (lower.includes('js') || lower.includes('typescript')) return '⚡';
+  if (lower.includes('node') || lower.includes('nest')) return '🟢';
+  if (lower.includes('database') || lower.includes('sql')) return '🗄️';
+  
+  return '🔹'; // أيقونة افتراضية
+};
+
 function App() {
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [skills, setSkills] = useState<SkillData[]>([]);
@@ -35,7 +57,7 @@ function App() {
   useEffect(() => {
     const query = `{
       "profile": *[_type == "profile"][0] {
-        name, image, education, bio, location, availableForWork,
+        name, image, education, bio, location, availableForWork, email,
         "cvUrl": cv.asset->url, 
         socials
       },
@@ -97,22 +119,22 @@ function App() {
           {profile.bio}
         </p>
 
-        {/* أزرار التواصل */}
-        <div className="w-full max-w-xl flex flex-col gap-4 mb-12">
-          <a href="mailto:email@example.com" className="group relative w-full p-[1px] rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all duration-300">
+        {/* أزرار التواصل (بما فيها الإيميل المستورد من الباك) */}
+        <div className="w-full max-w-xl flex flex-col gap-4 mb-8">
+          <a href={profile.email ? `mailto:${profile.email}` : "mailto:contact@muafaq.dev"} className="group relative w-full p-[1px] rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all duration-300">
             <div className="relative bg-[#080c14] rounded-[11px] py-4 flex items-center justify-center gap-3 font-bold text-white group-hover:bg-opacity-0 transition-all duration-300">
-              لنعمل معاً (Let's Work Together)
+              <span>✉️</span> لنعمل معاً (Let's Work Together)
             </div>
           </a>
           
           {profile.cvUrl && (
             <a href={profile.cvUrl} target="_blank" rel="noopener noreferrer" className="w-full bg-[#080c14] border border-cyan-900/50 hover:border-cyan-500/50 rounded-xl py-4 flex items-center justify-center gap-3 font-bold text-cyan-100 hover:text-white transition-all duration-300">
-              تحميل السيرة الذاتية (Resume)
+              <span>📄</span> تحميل السيرة الذاتية (Resume)
             </a>
           )}
         </div>
 
-        {/* روابط وسائل التواصل الاجتماعي (Telegram وغيرها) */}
+        {/* روابط وسائل التواصل الاجتماعي مع أيقونات ذكية تلقائية */}
         {profile.socials && profile.socials.length > 0 && (
           <div className="w-full max-w-xl mb-16 flex flex-wrap justify-center gap-4">
             {profile.socials.map((social) => (
@@ -121,22 +143,25 @@ function App() {
                 href={social.url} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="bg-[#0a0f18] border border-cyan-900/40 hover:border-cyan-400 text-cyan-300 px-6 py-3 rounded-xl text-sm font-bold flex items-center gap-2 hover:shadow-[0_0_15px_rgba(34,211,238,0.2)] transition-all duration-300"
+                className="bg-[#0a0f18] border border-cyan-900/40 hover:border-cyan-400 text-cyan-300 px-6 py-3 rounded-xl text-sm font-bold flex items-center gap-2.5 hover:shadow-[0_0_15px_rgba(34,211,238,0.2)] transition-all duration-300"
               >
-                <span>🌐</span> {social.platform}
+                <span>{getSmartIcon(social.platform)}</span> {social.platform}
               </a>
             ))}
           </div>
         )}
 
-        {/* قسم التقنيات */}
+        {/* قسم التقنيات مع أيقونات ذكية */}
         <div className="w-full max-w-2xl mb-16 text-center">
           <h3 className="text-sm font-bold text-gray-400 mb-6 tracking-[0.2em]">TECH STACK</h3>
           <div className="flex flex-wrap justify-center gap-3">
             {skills.map((skill) => (
               <div key={skill._id} className="bg-[#0a0f18] border border-cyan-900/30 text-gray-300 px-5 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2 hover:border-cyan-400 hover:text-cyan-300 hover:shadow-[0_0_15px_rgba(34,211,238,0.15)] transition-all duration-300 cursor-default">
-                {skill.image && (
+                {/* إذا لم ترفع صورة للتقنية، ستظهر الأيقونة الذكية تلقائياً */}
+                {skill.image ? (
                   <img src={urlFor(skill.image).width(24).url()} alt={skill.title} className="w-4 h-4 object-contain" />
+                ) : (
+                  <span>{getSmartIcon(skill.title)}</span>
                 )}
                 {skill.title}
               </div>

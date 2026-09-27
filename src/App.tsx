@@ -4,7 +4,7 @@ import {
   FaTelegram, FaGithub, FaLinkedin, FaWhatsapp, FaTwitter, FaEnvelope, FaGlobe,
   FaReact, FaJava, FaPhp, FaJs, FaNodeJs, FaHtml5, FaCss3Alt, FaGitAlt, FaDocker
 } from 'react-icons/fa';
-import { SiTypescript, SiLaravel, SiNestjs, SiTailwindcss, SiVite } from 'react-icons/si';
+import { SiTypescript, SiLaravel, SiNestjs, SiTailwindcss, SiVite, SiSanity } from 'react-icons/si';
 
 interface ProfileData {
   name: string;
@@ -32,24 +32,22 @@ interface ProjectData {
   link: string;
 }
 
-// دالة ذكية لإرجاع أيقونة ولون منصات التواصل الاجتماعي
 const getSocialIconAndColor = (platform: string) => {
   const lower = platform.toLowerCase();
   if (lower.includes('telegram') || lower.includes('تلغرام')) 
-    return { icon: <FaTelegram className="text-xl text-[#229ED9]" />, color: 'hover:border-[#229ED9]/50 hover:bg-[#229ED9]/10' };
+    return { icon: <FaTelegram className="text-xl text-[#229ED9]" />, color: 'hover:border-[#229ED9]/50 hover:bg-[#229ED9]/10 hover:-translate-y-1' };
   if (lower.includes('github') || lower.includes('جيت هب')) 
-    return { icon: <FaGithub className="text-xl text-white" />, color: 'hover:border-white/50 hover:bg-white/10' };
+    return { icon: <FaGithub className="text-xl text-white" />, color: 'hover:border-white/50 hover:bg-white/10 hover:-translate-y-1' };
   if (lower.includes('linkedin') || lower.includes('لينكد إن')) 
-    return { icon: <FaLinkedin className="text-xl text-[#0A66C2]" />, color: 'hover:border-[#0A66C2]/50 hover:bg-[#0A66C2]/10' };
+    return { icon: <FaLinkedin className="text-xl text-[#0A66C2]" />, color: 'hover:border-[#0A66C2]/50 hover:bg-[#0A66C2]/10 hover:-translate-y-1' };
   if (lower.includes('whatsapp') || lower.includes('واتساب')) 
-    return { icon: <FaWhatsapp className="text-xl text-[#25D366]" />, color: 'hover:border-[#25D366]/50 hover:bg-[#25D366]/10' };
+    return { icon: <FaWhatsapp className="text-xl text-[#25D366]" />, color: 'hover:border-[#25D366]/50 hover:bg-[#25D366]/10 hover:-translate-y-1' };
   if (lower.includes('twitter') || lower.includes('x')) 
-    return { icon: <FaTwitter className="text-xl text-white" />, color: 'hover:border-white/50 hover:bg-white/10' };
+    return { icon: <FaTwitter className="text-xl text-white" />, color: 'hover:border-white/50 hover:bg-white/10 hover:-translate-y-1' };
   
-  return { icon: <FaGlobe className="text-xl text-cyan-400" />, color: 'hover:border-cyan-400/50 hover:bg-cyan-400/10' };
+  return { icon: <FaGlobe className="text-xl text-cyan-400" />, color: 'hover:border-cyan-400/50 hover:bg-cyan-400/10 hover:-translate-y-1' };
 };
 
-// دالة ذكية لإرجاع أيقونة ولون التقنيات والمهارات البرمجية
 const getSkillIconAndColor = (title: string) => {
   const lower = title.toLowerCase();
   if (lower.includes('react')) return <FaReact className="text-xl text-[#61DAFB]" />;
@@ -97,23 +95,24 @@ function App() {
 
   if (loading || !profile) {
     return (
-      <div className="min-h-screen bg-[#030508] text-cyan-500 flex items-center justify-center font-mono text-sm tracking-widest">
-        <div className="animate-pulse">LOADING_SYSTEM...</div>
+      <div className="min-h-screen bg-[#030508] text-cyan-500 flex flex-col items-center justify-center font-mono text-sm tracking-widest">
+        <div className="w-16 h-16 border-4 border-cyan-900 border-t-cyan-500 rounded-full animate-spin mb-4"></div>
+        <div className="animate-pulse">LOADING_SYSTEM_DATA...</div>
       </div>
     );
   }
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[#030508] text-gray-200 py-16 px-4 relative z-0 tech-grid selection:bg-cyan-500 selection:text-black">
+    <div dir="rtl" className="min-h-screen bg-[#030508] text-gray-200 py-16 px-4 relative z-0 tech-grid selection:bg-cyan-500 selection:text-black flex flex-col justify-between">
       
       {/* إضاءة خلفية تقنية */}
       <div className="fixed top-[-20%] left-1/2 -translate-x-1/2 w-[60vw] max-w-[800px] h-[600px] bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none -z-10"></div>
 
-      <main className="max-w-3xl mx-auto flex flex-col items-center relative z-10">
+      <main className="max-w-3xl mx-auto flex flex-col items-center relative z-10 w-full flex-grow">
         
         {/* الصورة الشخصية */}
-        <div className="relative mb-8 group">
-          <div className="absolute -inset-1.5 bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full blur-md opacity-50 group-hover:opacity-80 transition duration-500"></div>
+        <div className="relative mb-8 group animate-fade-in">
+          <div className="absolute -inset-1.5 bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full blur-md opacity-50 group-hover:opacity-100 transition duration-500"></div>
           <div className="relative p-1 rounded-full bg-[#030508] border border-cyan-500/30">
             {profile.image && (
               <img 
@@ -124,41 +123,41 @@ function App() {
             )}
           </div>
           {profile.availableForWork && (
-            <span className="absolute bottom-1 right-2 w-4 h-4 bg-emerald-400 border-[3px] border-[#030508] rounded-full shadow-[0_0_10px_rgba(52,211,153,0.8)]"></span>
+            <span className="absolute bottom-1 right-2 w-4 h-4 bg-emerald-400 border-[3px] border-[#030508] rounded-full shadow-[0_0_10px_rgba(52,211,153,0.8)] animate-pulse"></span>
           )}
         </div>
 
         {/* الاسم والتخصص */}
-        <h1 className="text-2xl md:text-4xl lg:text-5xl font-black mb-3 text-center md:whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.2)]">
+        <h1 className="text-2xl md:text-4xl lg:text-5xl font-black mb-3 text-center md:whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.2)] animate-fade-in delay-100">
           {profile.name}
         </h1>
         
-        <h2 className="font-mono text-cyan-400 text-sm md:text-base mb-6 text-center tracking-wider bg-cyan-950/40 px-4 py-1.5 rounded-full border border-cyan-500/20">
+        <h2 className="font-mono text-cyan-400 text-sm md:text-base mb-6 text-center tracking-wider bg-cyan-950/40 px-4 py-1.5 rounded-full border border-cyan-500/20 animate-fade-in delay-200">
           <span className="text-gray-500">{"<"}</span> {profile.education} <span className="text-gray-500">{"/>"}</span>
         </h2>
         
-        <p className="text-gray-400 text-sm md:text-base mb-8 text-center leading-loose max-w-xl">
+        <p className="text-gray-400 text-sm md:text-base mb-8 text-center leading-loose max-w-xl animate-fade-in delay-200">
           {profile.bio}
         </p>
 
         {/* أزرار التواصل الأساسية */}
-        <div className="w-full max-w-xl flex flex-col gap-4 mb-8">
-          <a href={profile.email ? `mailto:${profile.email}` : "mailto:contact@muafaq.dev"} className="group relative w-full p-[1px] rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all duration-300">
+        <div className="w-full max-w-xl flex flex-col gap-4 mb-8 animate-fade-in delay-300">
+          <a href={profile.email ? `mailto:${profile.email}` : "mailto:contact@muafaq.dev"} className="group relative w-full p-[1px] rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all duration-300 hover:-translate-y-1">
             <div className="relative bg-[#080c14] rounded-[11px] py-4 flex items-center justify-center gap-3 font-bold text-white group-hover:bg-opacity-0 transition-all duration-300">
-              <FaEnvelope className="text-cyan-400 text-lg" /> لنعمل معاً (Let's Work Together)
+              <FaEnvelope className="text-cyan-400 text-lg group-hover:text-white transition-colors" /> لنعمل معاً (Let's Work Together)
             </div>
           </a>
           
           {profile.cvUrl && (
-            <a href={profile.cvUrl} target="_blank" rel="noopener noreferrer" className="w-full bg-[#080c14] border border-cyan-900/50 hover:border-cyan-500/50 rounded-xl py-4 flex items-center justify-center gap-3 font-bold text-cyan-100 hover:text-white transition-all duration-300">
+            <a href={profile.cvUrl} target="_blank" rel="noopener noreferrer" className="w-full bg-[#080c14] border border-cyan-900/50 hover:border-cyan-400/80 rounded-xl py-4 flex items-center justify-center gap-3 font-bold text-cyan-100 hover:text-white hover:bg-cyan-950/30 transition-all duration-300 hover:-translate-y-1">
               <span>📄</span> تحميل السيرة الذاتية (Resume)
             </a>
           )}
         </div>
 
-        {/* روابط وسائل التواصل الاجتماعي مع أيقونات براند أصلية */}
+        {/* روابط وسائل التواصل الاجتماعي */}
         {profile.socials && profile.socials.length > 0 && (
-          <div className="w-full max-w-xl mb-16 flex flex-wrap justify-center gap-4">
+          <div className="w-full max-w-xl mb-16 flex flex-wrap justify-center gap-4 animate-fade-in delay-300">
             {profile.socials.map((social) => {
               const { icon, color } = getSocialIconAndColor(social.platform);
               return (
@@ -176,12 +175,12 @@ function App() {
           </div>
         )}
 
-        {/* قسم التقنيات مع لوغوات وألوان حقيقية */}
-        <div className="w-full max-w-2xl mb-16 text-center">
+        {/* قسم التقنيات */}
+        <div className="w-full max-w-2xl mb-16 text-center animate-fade-in delay-400">
           <h3 className="text-sm font-bold text-gray-400 mb-6 tracking-[0.2em]">TECH STACK</h3>
           <div className="flex flex-wrap justify-center gap-3">
             {skills.map((skill) => (
-              <div key={skill._id} className="bg-[#0a0f18] border border-cyan-900/30 text-gray-300 px-5 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2.5 hover:border-cyan-400 hover:text-white hover:shadow-[0_0_15px_rgba(34,211,238,0.15)] transition-all duration-300 cursor-default">
+              <div key={skill._id} className="bg-[#0a0f18] border border-cyan-900/30 text-gray-300 px-5 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2.5 hover:border-cyan-400 hover:text-white hover:shadow-[0_0_15px_rgba(34,211,238,0.15)] hover:-translate-y-1 transition-all duration-300 cursor-default">
                 {skill.image ? (
                   <img src={urlFor(skill.image).width(24).url()} alt={skill.title} className="w-4 h-4 object-contain" />
                 ) : (
@@ -194,12 +193,12 @@ function App() {
         </div>
 
         {/* قسم المشاريع */}
-        <div className="w-full max-w-2xl">
+        <div className="w-full max-w-2xl mb-12 animate-fade-in delay-500">
           <h3 className="text-sm font-bold text-gray-400 mb-6 tracking-[0.2em] text-center">PROJECTS</h3>
           <div className="flex flex-col gap-6">
             {projects.map((project) => (
-              <div key={project._id} className="group bg-[#0a0f18] border border-cyan-900/20 rounded-2xl overflow-hidden p-6 hover:border-cyan-500/40 transition-all duration-500 relative">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-2xl -z-10 group-hover:bg-cyan-500/10 transition-colors"></div>
+              <div key={project._id} className="group bg-[#0a0f18] border border-cyan-900/20 rounded-2xl overflow-hidden p-6 hover:border-cyan-500/40 transition-all duration-500 relative hover:-translate-y-1 hover:shadow-[0_10px_30px_-15px_rgba(34,211,238,0.3)]">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-2xl -z-10 group-hover:bg-cyan-500/15 transition-colors duration-500"></div>
                 
                 <h4 className="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">{project.title}</h4>
                 <p className="text-gray-400 text-sm mb-6 leading-relaxed">
@@ -217,6 +216,21 @@ function App() {
         </div>
 
       </main>
+
+      {/* الفوتر (Footer) الاحترافي */}
+      <footer className="w-full max-w-3xl mx-auto mt-auto pt-8 pb-4 border-t border-cyan-900/30 flex flex-col items-center justify-center animate-fade-in delay-500 relative z-10">
+        <p className="text-gray-400 text-sm font-medium mb-3 text-center">
+          © {new Date().getFullYear()} <span className="text-cyan-400 font-bold hover:text-white transition-colors cursor-pointer">{profile.name}</span>. All Rights Reserved.
+        </p>
+        <div className="flex items-center justify-center gap-4 text-xs font-mono text-gray-500 bg-[#0a0f18] px-4 py-2 rounded-full border border-cyan-900/20">
+          <span className="flex items-center gap-1.5"><FaReact className="text-[#61DAFB] text-sm" /> React</span>
+          <span className="w-1 h-1 bg-gray-600 rounded-full"></span>
+          <span className="flex items-center gap-1.5"><SiTailwindcss className="text-[#06B6D4] text-sm" /> Tailwind</span>
+          <span className="w-1 h-1 bg-gray-600 rounded-full"></span>
+          <span className="flex items-center gap-1.5"><SiSanity className="text-[#F03E2F] text-sm" /> Sanity</span>
+        </div>
+      </footer>
+
     </div>
   );
 }

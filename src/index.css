@@ -2,16 +2,39 @@
 @import "tailwindcss";
 
 body {
-  background-color: #030508; /* لون تقني داكن جداً */
+  background-color: #030508;
   color: #e2e8f0;
   font-family: 'Tajawal', 'Outfit', sans-serif;
   overflow-x: hidden;
 }
 
-/* خلفية شبكية خفيفة تعطي طابعاً هندسياً */
 .tech-grid {
   background-image: 
     linear-gradient(to right, rgba(34, 211, 238, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(34, 211, 238, 0.03) 1px, transparent 1px);
   background-size: 40px 40px;
 }
+
+/* تأثيرات الظهور الاحترافية (Fade In Up) */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0; /* يبدأ مخفياً قبل الحركة */
+}
+
+/* تأخير الحركات لعمل تأثير متسلسل (Staggered Effect) */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }

@@ -65,7 +65,6 @@ function App() {
       {/* إضاءة خلفية تقنية */}
       <div className="fixed top-[-20%] left-1/2 -translate-x-1/2 w-[60vw] max-w-[800px] h-[600px] bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none -z-10"></div>
 
-      {/* تم توسيع الحاوية إلى max-w-3xl لمنع انكسار النص */}
       <main className="max-w-3xl mx-auto flex flex-col items-center relative z-10">
         
         {/* الصورة الشخصية */}
@@ -85,7 +84,7 @@ function App() {
           )}
         </div>
 
-        {/* الاسم والتخصص (مع منع الانكسار على الشاشات الكبيرة والتدرج اللوني) */}
+        {/* الاسم والتخصص */}
         <h1 className="text-2xl md:text-4xl lg:text-5xl font-black mb-3 text-center md:whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.2)]">
           {profile.name}
         </h1>
@@ -98,8 +97,8 @@ function App() {
           {profile.bio}
         </p>
 
-        {/* أزرار التواصل (Tech Gradients) */}
-        <div className="w-full max-w-xl flex flex-col gap-4 mb-16">
+        {/* أزرار التواصل */}
+        <div className="w-full max-w-xl flex flex-col gap-4 mb-12">
           <a href="mailto:email@example.com" className="group relative w-full p-[1px] rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all duration-300">
             <div className="relative bg-[#080c14] rounded-[11px] py-4 flex items-center justify-center gap-3 font-bold text-white group-hover:bg-opacity-0 transition-all duration-300">
               لنعمل معاً (Let's Work Together)
@@ -112,6 +111,23 @@ function App() {
             </a>
           )}
         </div>
+
+        {/* روابط وسائل التواصل الاجتماعي (Telegram وغيرها) */}
+        {profile.socials && profile.socials.length > 0 && (
+          <div className="w-full max-w-xl mb-16 flex flex-wrap justify-center gap-4">
+            {profile.socials.map((social) => (
+              <a 
+                key={social._key} 
+                href={social.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-[#0a0f18] border border-cyan-900/40 hover:border-cyan-400 text-cyan-300 px-6 py-3 rounded-xl text-sm font-bold flex items-center gap-2 hover:shadow-[0_0_15px_rgba(34,211,238,0.2)] transition-all duration-300"
+              >
+                <span>🌐</span> {social.platform}
+              </a>
+            ))}
+          </div>
+        )}
 
         {/* قسم التقنيات */}
         <div className="w-full max-w-2xl mb-16 text-center">
